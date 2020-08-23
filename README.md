@@ -16,6 +16,6 @@ REFRESH_TOKEN=ZZZZZZZZZZZZZZ
 
 ## Usage
 
-Just run the following command :
+Just plug your Garmin Edge 200 to your Linux host through USB and run the following command :
 
 `./main.py <number_of_latest_activities_to_upload>`
