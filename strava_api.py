@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 import requests
 import logging
+from time import sleep
 
 class StravaAPI:
     def __init__(self, secrets_path):
@@ -41,3 +42,38 @@ class StravaAPI:
             secrets_file.write("CLIENT_SECRET="+self.client_secret)
             secrets_file.write("REFRESH_TOKEN="+self.refresh_token)
         self.logger.info("Secrets file updated")
+
+    def upload_activity(self, activity_path, activity_name):
+        header = {"Authorization": "Bearer " + self.access_token}
+        payload = {"activity_type": "ride", "name": activity_name, "data_type": "fit"}
+        files =  {"file": open(activity_path, "rb")}
+        response = requests.post("https://www.strava.com/api/v3/uploads", headers=header, data=payload, files=files)
+        self.logger.debug("Raw upload request response ({}): {}".format(response.status_code, response.text))
+        if(response.status_code != 201):
+            self.logger.error("Error requesting activity upload for {}".format(activity_path))
+            return
+        activity_id=response.json()["id"]
+        processing_status = self.poll_upload_status(activity_id)
+        if processing_status == False:
+            self.logger.error("Error during activity processing for {}".format(activity_path))
+        else:
+            self.logger.info("Activity {} properly uploaded".format(activity_path))
+
+    def upload_n_activities(self, activities_list):
+        for activity in activities_list:
+            name = input("Enter a name for activity {} :\r\n". format(activity))
+            self.upload_activity(activity, name)
+
+    def poll_upload_status(self, activity_id):
+        processing_finished = False
+        while processing_finished == False:
+            sleep(3)
+            header = {"Authorization": "Bearer " + self.access_token}
+            response = requests.get("https://www.strava.com/api/v3/uploads/"+ str(activity_id), headers=header)
+            self.logger.debug("Raw upload polling response ({}): {}".format(response.status_code, response.text))
+            error = response.json()["error"]
+            if len(error) != 0:
+                print("End of processing polling with status \"{}\"".format(error))
+                processing_finished = True
+        return True
+

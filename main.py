@@ -29,4 +29,5 @@ try:
 except OSError:
     print("Cannot initialize Strava API")
 
-print(device.list_nth_activities(number_of_activities))
+activities = device.list_nth_activities(number_of_activities)
+api.upload_n_activities(activities)
