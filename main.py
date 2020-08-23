@@ -15,7 +15,7 @@ number_of_activities = int(sys.argv[1])
 
 secrets_path=os.path.dirname(os.path.realpath(__file__)) + "/secrets.env"
 if os.path.exists(secrets_path) == False:
-    print("File {} does not exist, please create it and fill it with Strava credentials")
+    print("File {} does not exist, please create it and fill it with Strava credentials", secrets_path)
     sys.exit(1)
 
 try:
