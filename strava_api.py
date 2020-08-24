@@ -72,7 +72,7 @@ class StravaAPI:
             response = requests.get("https://www.strava.com/api/v3/uploads/"+ str(activity_id), headers=header)
             self.logger.debug("Raw upload polling response ({}): {}".format(response.status_code, response.text))
             error = response.json()["error"]
-            if len(error) != 0:
+            if error != None:
                 print("End of processing polling with status \"{}\"".format(error))
                 processing_finished = True
         return True
