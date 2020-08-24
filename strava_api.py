@@ -37,7 +37,7 @@ class StravaAPI:
                 self.update_secrets_file()
         return token
 
-    def update_secrets_file():
+    def update_secrets_file(self):
         with open(self.secrets_path, "w") as secrets_file:
             secrets_file.write("CLIENT_SECRET="+self.client_secret)
             secrets_file.write("REFRESH_TOKEN="+self.refresh_token)
