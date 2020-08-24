@@ -13,11 +13,6 @@ if len(sys.argv) < 2:
     sys.exit(1)
 number_of_activities = int(sys.argv[1])
 
-secrets_path=os.path.dirname(os.path.realpath(__file__)) + "/secrets.env"
-if os.path.exists(secrets_path) == False:
-    print("File {} does not exist, please create it and fill it with Strava credentials", secrets_path)
-    sys.exit(1)
-
 try:
     device = DeviceEdge200()
     print("Device found")
@@ -26,7 +21,7 @@ except OSError:
     sys.exit(1)
 
 try:
-    api = StravaAPI(secrets_path)
+    api = StravaAPI()
 except OSError:
     print("Cannot initialize Strava API")
     sys.exit(1)
