@@ -66,14 +66,19 @@ class StravaAPI:
 
     def poll_upload_status(self, activity_id):
         processing_finished = False
+        result = False
         while processing_finished == False:
             sleep(3)
             header = {"Authorization": "Bearer " + self.access_token}
             response = requests.get("https://www.strava.com/api/v3/uploads/"+ str(activity_id), headers=header)
             self.logger.debug("Raw upload polling response ({}): {}".format(response.status_code, response.text))
             error = response.json()["error"]
+            status = response.json()["status"]
             if error != None:
-                print("End of processing polling with status \"{}\"".format(error))
+                print("End of processing polling with error \"{}\"".format(error))
                 processing_finished = True
-        return True
+            elif status == "Your activity is ready.":
+                processing_finished = True
+                result = True
+        return result
 
