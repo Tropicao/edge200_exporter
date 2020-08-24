@@ -6,6 +6,7 @@ import logging
 from time import sleep
 
 class StravaAPI:
+    EDGE_200_EXPORTER_CLIENT_ID=51819
     def __init__(self, secrets_path):
         self.logger= logging.getLogger('strava_api')
         self.logger.setLevel(logging.DEBUG)
@@ -15,7 +16,7 @@ class StravaAPI:
 
         self.secrets_path = secrets_path
         load_dotenv(dotenv_path=secrets_path)
-        self.client_id = os.getenv("CLIENT_ID")
+        self.client_id = self.EDGE_200_EXPORTER_CLIENT_ID
         self.client_secret = os.getenv("CLIENT_SECRET")
         self.refresh_token = os.getenv("REFRESH_TOKEN")
         self.access_token = self.get_access_token(self.client_id, self.client_secret, self.refresh_token)
@@ -38,7 +39,6 @@ class StravaAPI:
 
     def update_secrets_file():
         with open(self.secrets_path, "w") as secrets_file:
-            secrets_file.write("CLIENT_ID="+self.client_id)
             secrets_file.write("CLIENT_SECRET="+self.client_secret)
             secrets_file.write("REFRESH_TOKEN="+self.refresh_token)
         self.logger.info("Secrets file updated")
