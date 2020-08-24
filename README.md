@@ -4,15 +4,12 @@
 Tiny python tool to export Garming Edge 200 activities to Strava, since Garmin tool "Garmin Connect" does not work natively on Linux
 
 ## Preparation
-In order to use the tool, a `secrets.env` file must be present in the same directory as `main.py`, with the following structure :
-```
-CLIENT_ID=51819
-CLIENT_SECRET=YYYYYYYYYYYYYY
-REFRESH_TOKEN=ZZZZZZZZZZZZZZ
-```
 
-* The client ID and client secret are delivered by Strava when creating an app (please see https://www.strava.com/settings/api). So in order to use this tool you will have to create an app on Strava website
-* The refresh Token is delivered by Strava API after having validate the proper identification.authorization sequence. This is done thanks to OAuth2. You can find more details at https://developers.strava.com/docs/authentication/. Please note that you will only have to fill once the refresh token, the tool will then update when needed the screts file.
+Since the tool is executed on your own computer (i.e. it is not a web tool hosted on any cloud), you will need to create a Strava Application on your own, and when using the tool for the first time, grant this application access to your Strava profile to let it upload your activities.
+* To create an application, please go to https://www.strava.com/settings/api. Once created, your application will have its own application ID and application secrets
+* When launching the tool for the first time, it will ask for your applications informations (ID and secret), and guide you to negotiate the OAuth authorization process (just follow the instructions in the tools log) to get access to Strava Application.
+* When done successfully once, the tool will create a `secrets.env` file to retain your application details, so you will not have to authenticate the next time you use the tool.
+* **Security warning : make sure no one has access to your `secrets.env`, or they will be able to upload and modify activities on your account.**
 
 ## Usage
 
