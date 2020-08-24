@@ -23,11 +23,13 @@ try:
     print("Device found")
 except OSError:
     print("Cannot initialize device")
+    sys.exit(1)
 
 try:
     api = StravaAPI(secrets_path)
 except OSError:
     print("Cannot initialize Strava API")
+    sys.exit(1)
 
 activities = device.list_nth_activities(number_of_activities)
 api.upload_n_activities(activities)
