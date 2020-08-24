@@ -31,7 +31,7 @@ class StravaAPI:
         if self.access_token == None:
             self.logger.warning("Can not get access token to use Strava API")
             raise OSError
-    
+
     def get_strava_authorization(self):
         self.logger.info("You need to create a Strava application. When done, please note client id and client secret, needed for export authorization")
         self.logger.info("Please enter your application ID :")
