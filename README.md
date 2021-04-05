@@ -15,4 +15,8 @@ Since the tool is executed on your own computer (i.e. it is not a web tool hoste
 
 Just plug your Garmin Edge 200 to your Linux host through USB and run the following command :
 
-`./main.py <number_of_latest_activities_to_upload>`
+`./main.py`
+
+You can also specify the number of activities you want to upload if you need multiple activities upload. In this case, it will upload the required number of activities, taking the most recent on device :
+
+`./main.py 3`
